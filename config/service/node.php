@@ -6,4 +6,6 @@ return [
     "200" => env('SALE_REPORT_DOMAIN'),
     #选点服务地址
     "300" => env('SETPOINT_DOMAIN'),
+    #导表
+    "400" => env('SETPOINT_EXCEL_DOMAIN'),
 ];

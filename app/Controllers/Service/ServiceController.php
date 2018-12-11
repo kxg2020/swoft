@@ -2,6 +2,7 @@
 namespace App\Controllers\Service;
 use App\Constant\Enum;
 use Swoft\App;
+use Swoft\Db\Query;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Http\Message\Server\Request;
@@ -23,7 +24,6 @@ class ServiceController extends BaseController {
      * @return string json
      */
     public function dispatch(Request $request){
-
         if($this->initialize($request)){
             if (empty($request->serviceApi) || empty($request->serviceApiMethod)) {
                  return response()->json($this->printFail("4001"));
@@ -34,7 +34,6 @@ class ServiceController extends BaseController {
             }
             if (isset($result['status']) && $result['status'] == false) {
                 App::info(json_encode($result) ?? null);
-                return response()->json($this->printFail("4500", [], $result['msg'] ?? Enum::REQUEST_FAIL['4500']));
             }
             return response()->json($result);
         }
@@ -70,9 +69,11 @@ class ServiceController extends BaseController {
             $option['json']     = $this->params;
         }
 
+        App::profileStart('client_request_time');
         $result = (new \Swoft\HttpClient\Client())
             ->request($request->serviceApiMethod, $uri, $option)
             ->getResult();
+        App::profileEnd('client_request_time');
         return $result;
     }
 }

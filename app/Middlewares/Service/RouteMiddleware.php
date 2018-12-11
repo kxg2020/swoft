@@ -5,6 +5,7 @@ use App\Tools\ServiceTableBean;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Swoft\App;
 use Swoft\Bean\BeanFactory;
 use Swoft\Http\Message\Middleware\MiddlewareInterface;
 use Swoft\Bean\Annotation\Bean;
@@ -26,6 +27,7 @@ class RouteMiddleware implements MiddlewareInterface{
     private $auth;
     private $origin = "*";
     private $header = "";
+    private $target = "";
     private $authError;
 
     /**
@@ -36,6 +38,7 @@ class RouteMiddleware implements MiddlewareInterface{
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface{
         $this->header = $request->getHeaderLine("Access-Control-Request-Headers");
+        $this->target = $request->getRequestTarget() == "/service/upload" ? true : false;
         if($request->getMethod() == "OPTIONS"){
             return $this->configResponse(response());
         }
@@ -62,6 +65,7 @@ class RouteMiddleware implements MiddlewareInterface{
         $productKey = \Swoft::getBean("config")->get("user.permission.productKey");
         $requestUrl = \Swoft::getBean("config")->get("user.permission.url");
         $requestUrl.= "?productKey=".$productKey;
+        App::profileStart('auth_request_time');
         $response   = (new \Swoft\HttpClient\Client())->get($requestUrl, [
             'headers' => [
                 "Content-type"  => "application/json",
@@ -71,8 +75,9 @@ class RouteMiddleware implements MiddlewareInterface{
             ],
             "timeout" => 30
         ])->getResult();
+        App::profileEnd('auth_request_time');
         $response = json_decode($response,true);
-        return $this->userAuthorizationCode($response);
+        return $this->target ? : $this->userAuthorizationCode($response);
     }
 
     /**
@@ -97,7 +102,6 @@ class RouteMiddleware implements MiddlewareInterface{
                         });
                     }
                 }
-
                 return (in_array($this->auth,$userAuthCode) || (empty($this->auth) && $this->auth !== null)) ? true : false;
             }
             return false;
@@ -146,7 +150,7 @@ class RouteMiddleware implements MiddlewareInterface{
         return $response
             ->withHeader('Access-Control-Allow-Origin', $this->origin)
             ->withHeader('Access-Control-Allow-Headers', $this->header)
-            ->withHeader("Access-Control-Max-Age",1800)
+            ->withHeader("Access-Control-Max-Age",600)
             ->withHeader("Access-Control-Allow-Credentials",true)
             ->withHeader("Cache-Control","no-store")
             ->withHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');

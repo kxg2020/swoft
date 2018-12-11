@@ -8,7 +8,7 @@ return [
         "1003" => ["api" => "/plan/checkRenamed@POST","auth" => ''], #方案列表-方案重名判断
         "1004" => ["api" => "/create-plan@POST","auth" => ''], #方案列表-保存新增加方案
         "1005" => ["api" => "/getLedPlanDetail@GET","auth" => ''], #方案列表-方案详情
-        "1006" => ["api" => "/sell/adjustPlan@POST","auth" => ''], #方案列表-修改方案
+        "1006" => ["api" => "/plan@POST","auth" => ''], #方案列表-修改方案
         "1007" => ["api" => "/plan/btPoint/list@GET","auth" => ''], #方案列表-被踢点位列表
         "1008" => ["api" => "/plan/btPoint/export@GET","auth" => ''], #方案列表-被踢点位导出
         # 方案列表(已删除)
@@ -17,35 +17,37 @@ return [
         "1011" => ["api" => "/order/list@GET","auth" => 20], #方案列表(已删除)-恢复
         "1012" => ["api" => "/order/list@GET","auth" => 20], #方案列表(已删除)-被踢点位列表
         # 点位调度(预定)
-        "1013" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-方案信息(界面最上方)
-        "1014" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-项目选点-查询项目列表
-        "1015" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-项目选点-查询已选项目
-        "1016" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-项目选点-添加已选项目
-        "1017" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-项目选点-移除已选项目
+        "1013" => ["api" => "/getLedPlanSimpleDetail@GET","auth" => ''], #点位调度(预定)-方案信息(界面最上方)
+        "1014" => ["api" => "/getPremises@POST","auth" => ''], #点位调度(预定)-项目选点-查询项目列表
+        "1015" => ["api" => "/plan/premises@GET","auth" => ''], #点位调度(预定)-项目选点-查询已选项目
+        "1016" => ["api" => "/addPremises@POST","auth" => ''], #点位调度(预定)-项目选点-添加已选项目
+        "1017" => ["api" => "/delPremises@POST","auth" => ''], #点位调度(预定)-项目选点-移除已选项目
         "1018" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-地图选点-项目列表-已选楼盘
         "1019" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-地图选点-项目列表-未选楼盘
         "1020" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-地图选点-项目列表-加入项目
         "1021" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-已选项目
-        "1022" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-已选设备
-        "1023" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-未选设备
-        "1024" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-项目名称粘贴
-        "1025" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-设备编号粘贴
+        "1022" => ["api" => "/plan/machinesByPremisesId@GET","auth" => ''], #点位调度(预定)-点位调度-已选设备
+        "1023" => ["api" => "/plan/machinesByPremisesId@GET","auth" => ''], #点位调度(预定)-点位调度-未选设备
+        "1024" => ["api" => "/plan/pastePremisesNames@POST","auth" => ''], #点位调度(预定)-点位调度-项目名称粘贴
+        "1025" => ["api" => "/plan/pasteMachine@POST","auth" => ''], #点位调度(预定)-点位调度-设备编号粘贴
         "1026" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-项目查询
         "1027" => ["api" => "/order/list@GET","auth" => 20], #点位调度(预定)-点位调度-整理方案
+        "1077" => ["api" => "/getAllPremises@GET","auth" => ''], #点位调度(预定)-查询项目列表（全部）
         # 方案排斥
-        "1028" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-查询
-        "1029" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-清除排斥
-        "1030" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-设备排斥
-        "1031" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-单元排斥
-        "1032" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-楼栋排斥
-        "1033" => ["api" => "/order/list@GET","auth" => 20], #方案排斥-项目排斥
+        "1028" => ["api" => "/getExclude@GET","auth" => ''], #方案排斥-查询
+        "1029" => ["api" => "/delExclude@POST","auth" => ''], #方案排斥-清除排斥
+        "1030" => ["api" => "/addExclude@POST","auth" => ''], #方案排斥-设备排斥
+        "1031" => ["api" => "/addExclude@POST","auth" => ''], #方案排斥-单元排斥
+        "1032" => ["api" => "/addExclude@POST","auth" => ''], #方案排斥-楼栋排斥
+        "1033" => ["api" => "/addExclude@POST","auth" => ''], #方案排斥-项目排斥
+        "1078" => ["api" => "/getHasExclude@GET","auth" => ''], #方案排斥-已排斥方案列表
         # 方案拆解
-        "1034" => ["api" => "/order/list@GET","auth" => 20], #方案拆解-可选时间
-        "1035" => ["api" => "/order/list@GET","auth" => 20], #方案拆解-拆解预览
-        "1036" => ["api" => "/order/list@GET","auth" => 20], #方案拆解-提交拆解
+        "1034" => ["api" => "/ledPlanSplit/splitPlan@GET","auth" => ''], #方案拆解-可选时间
+        "1035" => ["api" => "/ledPlanSplit/splitPlanDate@POST","auth" => ''], #方案拆解-拆解预览
+        "1036" => ["api" => "/ledPlanSplit/submitSplit@POST","auth" => ''], #方案拆解-提交拆解
         "1037" => ["api" => "/order/list@GET","auth" => 20], #方案拆解-方案自动拆解(定时任务)
         #
-        "1038" => ["api" => "/order/list@GET","auth" => 20], #删除方案
+        "1038" => ["api" => "/delete-plan@POST","auth" => ''], #删除方案
         "1039" => ["api" => "/sell/order@POST","auth" => ''], #转保留
         "1040" => ["api" => "/sell/repreorder@POST","auth" => ''], #转预定
         "1041" => ["api" => "/order/list@GET","auth" => 20], #转销售
@@ -66,12 +68,12 @@ return [
         # 公共模块
         "1054" => ["api" => "/saleUser@GET","auth" => ''],   #公共模块-业务人员
         "1055" => ["api" => "/create-man@GET","auth" => ''], #公共模块-创建人
-        "1056" => ["api" => "/getOrder@GET","auth" => ''],   #公共模块-根据业务人员获取
-        #所属订单
+        "1056" => ["api" => "/getOrder@GET","auth" => ''],   #公共模块-根据业务人员获取所属订单
         "1057" => ["api" => "/supplier@GET","auth" => ''],   #公共模块-投放城市(公司)
-        "1058" => ["api" => "/getOrder@GET","auth" => ''], #公共模块-根据城市查询行政区域
+        "1058" => ["api" => "/getAreas@GET","auth" => ''], #公共模块-根据城市查询行政区域
         "1059" => ["api" => "/trade@GET","auth" => ''],      #公共模块-行业
         "1060" => ["api" => "/dictionary@GET","auth" => ''], #公共模块-批量查询字典
+        "1079" => ["api" => "/send-to-dingding-master@POST","auth" => ''], #公共模块-发送钉钉消息
         # 日志管理
         "1061" => ["api" => "/order/list@GET","auth" => 20], #日志管理-日志查询
         # 字典管理
@@ -107,18 +109,18 @@ return [
         #点位调度
         "2007" => ["api" => "/sell/preorder/specify@POST","auth" => ''], #点位调度-点位调度-设备编号粘贴
         #
-        "2008" => ["api" => "/order/list@GET","auth" => 20], #点位导出
+        "2008" => ["api" => "/export-plan-excel@POST","auth" => ''], #点位导出
         "2009" => ["api" => "/order/list@GET","auth" => 20], #地图导出
         #余量方案
         "2010" => ["api" => "/order/list@GET","auth" => 20], #余量方案-方案导出
         "2011" => ["api" => "/order/list@GET","auth" => 20], #余量方案-地图导出
         #MSP
-        "2012" => ["api" => "/order/list@GET","auth" => 20], #MSP-上刊表JSON
-        "2013" => ["api" => "/order/list@GET","auth" => 20], #MSP-上刊表Excel
-        "2014" => ["api" => "/order/list@GET","auth" => 20], #MSP-压缩上刊表JSON
-        "2015" => ["api" => "/order/list@GET","auth" => 20], #MSP-压缩上刊表Excel
-        "2016" => ["api" => "/order/list@GET","auth" => 20], #MSP-路单表JSON
-        "2017" => ["api" => "/order/list@GET","auth" => 20], #MSP-路单表Excel
+        "2012" => ["api" => "/msp/publishJson@POST","auth" => ''], #MSP-上刊表JSON
+        "2013" => ["api" => "/msp/publishExcel@POST","auth" => ''], #MSP-上刊表Excel
+        "2014" => ["api" => "/msp/publishCompressJson@POST","auth" => ''], #MSP-压缩上刊表JSON
+        "2015" => ["api" => "/msp/publishCompressExcel@POST","auth" => ''], #MSP-压缩上刊表Excel
+        "2016" => ["api" => "/waybill/waybillJson@POST","auth" => ''], #MSP-路单表JSON
+        "2017" => ["api" => "/waybill/waybillExcel@POST","auth" => ''], #MSP-路单表Excel
         "2018" => ["api" => "/order/list@GET","auth" => 20], #MSP-1.0表
         "2019" => ["api" => "/order/list@GET","auth" => 20], #MSP-横屏上屏表
         "2020" => ["api" => "/order/list@GET","auth" => 20], #MSP-导出余量被踢点位
@@ -151,5 +153,14 @@ return [
         "3007" => ["api" => "/sell/schedule@POST","auth" => ''], #点位调度-设备分析
         #MSP
         "3008" => ["api" => "/order/list@GET","auth" => 20], #MSP-上刊检查
+    ],
+    #导表服务
+    "400" => [
+        "2012" => ["api" => "/msp/publishJson@POST","auth" => ''], #MSP-上刊表JSON
+        "2013" => ["api" => "/msp/publishExcel@POST","auth" => ''], #MSP-上刊表Excel
+        "2014" => ["api" => "/msp/publishCompressJson@POST","auth" => ''], #MSP-压缩上刊表JSON
+        "2015" => ["api" => "/msp/publishCompressExcel@POST","auth" => ''], #MSP-压缩上刊表Excel
+        "2016" => ["api" => "/waybill/waybillJson@POST","auth" => ''], #MSP-路单表JSON
+        "2017" => ["api" => "/waybill/waybillExcel@POST","auth" => ''], #MSP-路单表Excel
     ],
 ];

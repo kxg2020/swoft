@@ -29,6 +29,12 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer self-update --clean-backups
 
+# SSH
+RUN mkdir -p /var/run/sshd && \
+    echo 'root:root' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
 # PDO extension
 RUN docker-php-ext-install pdo_mysql
 
@@ -69,8 +75,9 @@ RUN wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz 
     && rm -r swoole \
     && docker-php-ext-enable swoole
 
-WORKDIR /var/www/swoft
+WORKDIR /opt/www/swoft
 
-EXPOSE 8080
+EXPOSE 80
+EXPOSE 22
 
-ENTRYPOINT cp .env.$ACTION .env  && php /var/www/swoft/bin/swoft start -d
+CMD ["/usr/sbin/sshd", "-D"]
