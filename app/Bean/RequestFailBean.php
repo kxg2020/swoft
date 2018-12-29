@@ -25,4 +25,16 @@ class RequestFailBean{
     {
         return Enum::SSO_ERROR;
     }
+
+    public function signError(){
+        return Enum::SIGN_ERROR;
+    }
+
+    public function tokenNotExist(){
+        return Enum::TOKEN_NOT_EXIST;
+    }
+
+    public function invalidToken(){
+        return Enum::INVALID_TOKEN;
+    }
 }

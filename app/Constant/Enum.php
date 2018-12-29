@@ -18,8 +18,7 @@ class Enum{
     /***************************权限错误码*****************************/
     # 单点登录异常
     const SSO_ERROR_CODE = 8000;
-    # 权限验证失败
-    const PERMISSION_AUTH_FAIL_CODE = 8001;
+    const INVALID_TOKEN_CODE = 8001;
     /***************************权限错误码*****************************/
 
 
@@ -34,6 +33,9 @@ class Enum{
     const ROUTE_NOT_FOUND_CODE = 6000;
     /***************************路由错误码*****************************/
 
+    #参数过滤项
+    const FILTER = ['\'', '"', '|', '$', '#'];
+
     # 请求成功状态码及信息
     const REQUEST_SUCCESS = [
         "000" => "请求成功",
@@ -43,10 +45,10 @@ class Enum{
     /***************************错误码对应msg*****************************/
     # 请求失败状态码及信息
     const REQUEST_FAIL = [
-        "4000" => "code参数错误",
-        "4001" => "无效code码",
+        "4000" => "node参数错误",
+        "4001" => "无效节点",
         "4003" => "上传文件失败",
-        "4500" => "数据错误"
+        "4500" => "数据为空"
     ];
     /***************************错误码对应msg*****************************/
 
@@ -54,7 +56,7 @@ class Enum{
     /***************************常用错误返回*****************************/
     # 权限验证失败
     const PERMISSION_AUTH_FAIL = [
-        "code"   => "8001",
+        "code"   => "8002",
         "msg"    => "permission denied",
         "data"   => [],
         "status" => false
@@ -77,6 +79,27 @@ class Enum{
     const ROUTE_NOT_FOUND = [
         "code"   => "6000",
         "msg"    => "route not found",
+        "data"   => [],
+        "status" => false
+    ];
+    #签名错误
+    const SIGN_ERROR = [
+        "code"   => "7002",
+        "msg"    => "invalid signature",
+        "data"   => [],
+        "status" => false
+    ];
+    #请求头部
+    const TOKEN_NOT_EXIST = [
+        "code"   => "7004",
+        "msg"    => "token not exist",
+        "data"   => [],
+        "status" => false
+    ];
+    # Token错误
+    const INVALID_TOKEN  = [
+        "code"   => "8001",
+        "msg"    => "invalid token",
         "data"   => [],
         "status" => false
     ];

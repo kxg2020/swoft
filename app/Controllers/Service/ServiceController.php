@@ -2,7 +2,7 @@
 namespace App\Controllers\Service;
 use App\Constant\Enum;
 use Swoft\App;
-use Swoft\Db\Query;
+use Swoft\Core\RequestContext;
 use Swoft\Http\Server\Bean\Annotation\Controller;
 use Swoft\Http\Server\Bean\Annotation\RequestMapping;
 use Swoft\Http\Message\Server\Request;
@@ -16,6 +16,7 @@ use Swoft\Http\Server\Bean\Annotation\RequestMethod;
 class ServiceController extends BaseController {
     private $code;
     private $params;
+    private $token;
 
     /**
      * 节点转发
@@ -32,9 +33,6 @@ class ServiceController extends BaseController {
             if (empty($result) || !is_array($result)) {
                 return response()->json($this->printFail("4500"));
             }
-            if (isset($result['status']) && $result['status'] == false) {
-                App::info(json_encode($result) ?? null);
-            }
             return response()->json($result);
         }
         return response()->json($this->printFail("4000"));
@@ -47,8 +45,12 @@ class ServiceController extends BaseController {
     public function initialize(Request $request):bool {
         $this->code   = $request->query("node","");
         $this->params = $request->json() ?: $request->post();
+        App::pushlog('params', $this->params);
+        $this->params = !is_array($this->params) ? [] : $this->params;
+        $this->params = $this->filter($this->params);
+        App::pushlog('filtered_params', $this->params);
         if($this->code && is_numeric($this->code) && strlen($this->code) == Enum::CODE_LENGTH){
-            $this->params['token'] = $request->getHeaderLine('token');
+            $this->token = $request->getHeaderLine('token');
             return true;
         }
         return false;
@@ -59,7 +61,13 @@ class ServiceController extends BaseController {
      * @return string
      */
     private function request(Request $request){
-        $option = ["timeout"=>120];
+        $option = [
+            "timeout" => 120,
+            "headers" => [
+                "token" => $this->token,
+                "Access-Log-Id" => RequestContext::getLogid()
+            ]
+        ];
         $uri = $request->serviceApi;
         if ($request->serviceApiMethod == 'GET') {
             $option['base_uri'] = $request->domain;
@@ -68,12 +76,12 @@ class ServiceController extends BaseController {
             $option['base_uri'] = $request->domain;
             $option['json']     = $this->params;
         }
-
         App::profileStart('client_request_time');
         $result = (new \Swoft\HttpClient\Client())
             ->request($request->serviceApiMethod, $uri, $option)
             ->getResult();
         App::profileEnd('client_request_time');
+        App::info($result);
         return $result;
     }
 }

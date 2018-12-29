@@ -27,4 +27,13 @@ class BaseController{
         ];
         return $this->response;
     }
+
+    protected function filter(array $params) {
+        array_walk_recursive($params, function (&$val){
+            $filter = Enum::FILTER;
+            $replace = [];
+            $val = str_replace($filter, $replace, $val);
+        });
+        return $params;
+    }
 }

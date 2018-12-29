@@ -41,7 +41,7 @@ class ServiceExceptionHandler{
             'line' => $this->line,
             'code' => $this->code
         ];
-        App::error(json_encode($this->exception));
+        App::error(json_encode($this->exception,256));
         return $this->code == 404 ? $this->routeNotFound() : $this->innerError();
     }
 
