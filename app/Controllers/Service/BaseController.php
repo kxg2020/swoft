@@ -29,10 +29,12 @@ class BaseController{
     }
 
     protected function filter(array $params) {
-        array_walk_recursive($params, function (&$val){
-            $filter = Enum::FILTER;
-            $replace = [];
-            $val = str_replace($filter, $replace, $val);
+        $filter = Enum::FILTER;
+        $replace = [];
+        array_walk_recursive($params, function (&$val) use ($filter, $replace){
+            $type = gettype($val);
+            !empty($val) && $val = str_replace($filter, $replace, $val);
+            $type == 'integer' && $val = (integer)$val;
         });
         return $params;
     }

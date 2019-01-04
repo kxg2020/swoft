@@ -2,7 +2,8 @@
 return [
     "permission" => [
         "url"        => env('PERMISSION_DOMAIN'),
-        "productKey" => env('PERMISSION_PRODUCT_KEY')
+        "productKey" => env('PERMISSION_PRODUCT_KEY'),
     ],
+
 
 ];

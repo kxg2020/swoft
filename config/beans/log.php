@@ -8,8 +8,8 @@
 
 return [
     'noticeHandler'      => [
-        'class'     => \Swoft\Log\FileHandler::class,
-        'logFile'   => '@runtime/logs/'.date("Y/m/d").'/notice.log',
+        'class'     => \App\Log\LogHandler::class,
+        'logFile'   => '@runtime/logs/' . date('Y/m/d') . '/notice.log',
         'formatter' => '${lineFormatter}',
         'levels'    => [
             \Swoft\Log\Logger::NOTICE,
@@ -18,8 +18,8 @@ return [
         ],
     ],
     'applicationHandler' => [
-        'class'     => \Swoft\Log\FileHandler::class,
-        'logFile'   => '@runtime/logs/'.date("Y/m/d").'/error.log',
+        'class'     => \App\Log\LogHandler::class,
+        'logFile'   => '@runtime/logs/' . date('Y/m/d') . '/error.log',
         'formatter' => '${lineFormatter}',
         'levels'    => [
             \Swoft\Log\Logger::ERROR,
@@ -27,8 +27,8 @@ return [
         ],
     ],
     'infoHandler' => [
-        'class'     => \Swoft\Log\FileHandler::class,
-        'logFile'   => '@runtime/logs/'.date("Y/m/d").'/info.log',
+        'class'     => \App\Log\LogHandler::class,
+        'logFile'   => '@runtime/logs/' . date('Y/m/d') . '/info.log',
         'formatter' => '${lineFormatter}',
         'levels'    => [
             \Swoft\Log\Logger::INFO,

@@ -9,10 +9,9 @@
 
 return [
     'user' => [
-        'name'        => 'redis',
+        'name'        => 'user',
         'uri'         => [
-            '127.0.0.1:8099',
-            '127.0.0.1:8099',
+            'www.it9g.com/api/check:80', #用户服务的地址
         ],
         'minActive'   => 8,
         'maxActive'   => 8,
@@ -23,5 +22,22 @@ return [
         'useProvider' => false,
         'balancer' => 'random',
         'provider' => 'consul',
-    ]
+    ],
+
+    'order' => [
+        'name'        => 'order',
+        'uri'         => [
+            'xxx.consul.com', #订单服务的地址
+            'xxx.consul.com', #订单服务的地址
+        ],
+        'minActive'   => 8,
+        'maxActive'   => 8,
+        'maxWait'     => 8,
+        'maxWaitTime' => 3,
+        'maxIdleTime' => 60,
+        'timeout'     => 8,
+        'useProvider' => false,
+        'balancer' => 'random',
+        'provider' => 'consul',
+    ],
 ];

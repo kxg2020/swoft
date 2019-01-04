@@ -28,4 +28,5 @@ return [
     'breaker'      => require __DIR__ . DS . 'breaker.php',
     'provider'     => require __DIR__ . DS . 'provider.php',
     'user'         => require __DIR__ . DS . 'user.php',
+    'list'         => require __DIR__ . DS . 'list.php',
 ];

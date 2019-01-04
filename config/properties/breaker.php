@@ -8,6 +8,7 @@
  */
 
 return [
+    # 用户服务熔断参数
     'user' => [
         'failCount'    => 3,
         'successCount' => 3,

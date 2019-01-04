@@ -38,6 +38,7 @@ class RouteMiddleware implements MiddlewareInterface{
      * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface{
+        return $handler->handle($request);
         $this->header = $request->getHeaderLine("Access-Control-Request-Headers");
         $this->target = $request->getRequestTarget() == "/service/upload" ? true : false;
         $this->auth   = $this->userRequestNodeApi($request);
@@ -77,7 +78,7 @@ class RouteMiddleware implements MiddlewareInterface{
     private function whetherNodeIsNoValidate(ServerRequestInterface $request):bool {
         $noValidationList = \Swoft::getBean("config")->get("noValidation") ?? [];
         $node = $request->getQueryParams()["node"] ?? "";
-        if(in_array($node,$noValidationList) && $request->hasHeader("token") == false){
+        if(in_array($node,$noValidationList)){
             return true;
         }
         return false;
@@ -128,13 +129,7 @@ class RouteMiddleware implements MiddlewareInterface{
     private function userAuthorizationCode($response):bool {
         $userAuthCode = [];
         if($response["status"]){
-            if ($response["code"] == "044") {
-                $this->authError = Enum::SSO_ERROR_CODE;
-                return false;
-            }elseif($response["code"] == "036"){
-                $this->authError = Enum::INVALID_TOKEN_CODE;
-                return false;
-            }elseif ($response["code"] != "000") {
+            if ($response["code"] != "000") {
                 App::pushlog($response['code'] ?? 'auth', $response['msg'] ?? 'auth failed');
                 return false;
             }
@@ -150,6 +145,13 @@ class RouteMiddleware implements MiddlewareInterface{
 
                 return (in_array($this->auth,$userAuthCode) || (empty($this->auth) && $this->auth !== null)) ? true : false;
             }
+        }
+        if ($response["code"] == "044") {
+            $this->authError = Enum::SSO_ERROR_CODE;
+            return false;
+        }elseif($response["code"] == "036") {
+            $this->authError = Enum::INVALID_TOKEN_CODE;
+            return false;
         }
         App::pushlog($response['code'] ?? 'auth', $response['msg'] ?? 'auth failed');
         return false;
