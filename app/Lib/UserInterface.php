@@ -30,7 +30,7 @@ interface UserInterface
      * [
      *    'uid' => [],
      *    'uid2' => [],
-     *    ......
+     *    .....
      * ]
      * <pre>
      */
